@@ -79,7 +79,7 @@ Bootstrap.make = function(routes, components, states = null) {
      */
     return new Vue({
         store,
-        computed: states ? hx.computed(states) : {},
+        computed: states ? hx.computed(Object.keys(states)) : {},
         components,
         router
     });

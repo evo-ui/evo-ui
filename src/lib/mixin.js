@@ -35,7 +35,7 @@ methods.datetime = function(value) {
  */
 methods.on = function(name, callback) {
     if(this.eventsInternal) {
-        this.eventsInternal.push($event.on(name, callback));
+        this.eventsInternal.push(hx.event.on(name, callback));
     }
 };
 
@@ -46,7 +46,7 @@ methods.on = function(name, callback) {
  */
 methods.addOn = function(name, callback) {
     if(this.eventsInternal) {
-        this.eventsInternal.push($event.addOn(name, callback));
+        this.eventsInternal.push(hx.event.addOn(name, callback));
     }
 };
 
@@ -56,7 +56,7 @@ methods.addOn = function(name, callback) {
  * @param data
  */
 methods.fire = function(...args) {
-    $event.fire(...args);
+    hx.event.fire(...args);
 };
 
 /**
