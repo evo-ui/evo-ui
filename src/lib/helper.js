@@ -21,7 +21,20 @@ helper.xhr = new Xhr();
  */
 helper.notify = function(title, message, type, timer) {
     // console.log(title, message, type);
-    if( title && typeof title === 'object' && typeof title.success !== "undefined" ) {
+    if( title && typeof title === 'object' && typeof title.errors === "object" ) {
+        let messages = [];
+        for(let i in title.errors) {
+            if(!title.errors.hasOwnProperty(i)) {
+                continue;
+            }
+
+            messages.push(title.errors[i]);
+        }
+
+        message = messages.join("\n");
+        title = title.message;
+    }
+    else if( title && typeof title === 'object' && typeof title.success !== "undefined" ) {
         message = title.success ? (message || (title.msg || '')) : (title.msg || title.message);
         type = title.success;
 
@@ -64,11 +77,23 @@ helper.notify = function(title, message, type, timer) {
 helper.api = function(endpoint, params) {
     let url = app.api_endpoint + endpoint;
 
-    if(params) {
-        url += '?'+ this.query(params);
+    // if(params) {
+    //     url += '?'+ this.query(params);
+    // }
+
+    let parts = '';
+    if (typeof app === 'object' && app.api_token) {
+        parts = '?api_token=' + app.api_token;
     }
 
-    return url;
+    if( params ) {
+        if( typeof params === 'object' ) {
+            params = this.query( params );
+        }
+        parts = (parts ? '&' : '?') + params;
+    }
+
+    return url + parts;
 };
 
 /**
@@ -78,7 +103,7 @@ helper.api = function(endpoint, params) {
  * @returns {boolean}
  */
 helper.invalid = function(response, notify) {
-    if(!response || typeof response !== 'object' || (typeof response.success !== 'undefined' && !response.success)) {
+    if(!response || typeof response !== 'object' || (typeof response.success !== 'undefined' && !response.success) || (typeof response.errors === 'object')) {
         // console.log('error', response); // TODO notify
         helper.notify(response);
         return true;
@@ -96,7 +121,7 @@ helper.invalid = function(response, notify) {
  * @param element
  * @param name
  */
-helper.event = function(element, name) {
+helper.eventTrigger = function(element, name) {
     let event; // The custom event that will be created
 
     if (document.createEvent) {

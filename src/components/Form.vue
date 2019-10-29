@@ -29,7 +29,7 @@ function on(e,t,f,r){
 }
 
 function sendNotify(title, message, type, timer) {
-    helper.notify(title, message, type, timer);
+    hx.notify(title, message, type, timer);
 }
 
 function fireEvent(element, name) {
@@ -306,7 +306,7 @@ export default {
 			let input = null;
 			setTimeout(() => {
 				if(typeof self.autofocus !== "undefined") {
-					helper.focusInput(self.$el);
+					hx.focusInput(self.$el);
 				}
 			}, 200);
 		},

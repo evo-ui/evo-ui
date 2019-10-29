@@ -1,0 +1,44 @@
+/**
+  * Modal (coming soon)
+  */
+// .modal { position: fixed; z-index:10; border-radius: 2px; top: 10%; width: 95%; max-width: 680px; margin: auto; min-height: 130px; left: 0; right: 0;  }
+// #modal-bg { position: absolute; top: 0; left: 0; bottom:0; right: 0; overflow: auto; z-index: 1; background: rgba(0,10,50,0.4); }
+.modal {
+	&.open { position: fixed; z-index:10; border-radius: 2px; top: 0; bottom: 0; left: 0; right: 0; background: rgba(0,10,50,0.4); overflow-y: auto }
+	&.loading .loader-overlay{ position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; background: rgba($light, 0.7); border-radius: 2px }
+	&.xl .outer{ max-width: 1200px; }
+	&.lg .outer{ max-width: 920px; }
+	&.md .outer{ max-width: 640px; }
+	&.gray-bg .inner{ background: $lgray }
+	.outer { position: absolute; z-index:10; border-radius: 2px; top: 0; width: 95%; max-width: 680px; margin: 30px auto; min-height: 130px; left: 0; right: 0; margin-bottom: 30px; bottom: 0; }
+	.inner { box-shadow: 0 9px 10px -4px lighten($dark, 35%); background: #fff; border-radius: 3px; padding-top: 1px }
+	
+	.loader-overlay .loading-spinner { top: 0; bottom: 0; left: 0; right: 0; position: absolute; height: 20px; width: 20px; margin: auto }
+
+	&.dark .inner { background-color: $dark; }
+	&.dark .btns { background-color: $dark }
+	&.dark .heading { color: $gray }
+
+	// .inner {
+	//   background-color: #fff;
+	//   border-radius: 3px;
+	//   max-width: 500px;
+	//   margin: 50px auto;
+	//   padding: 20px;
+	// }
+	// .inner { z-index:10; border-radius: 2px; top: 10%; width: 95%; max-width: 680px; margin: auto; min-height: 130px; left: 0; right: 0; }
+	.inner { position: relative; }
+	.options { position: absolute; right: 20px; top: 20px; z-index: 1 }
+	.options .ex{ font-size: 17pt; color: $gray; cursor: pointer }
+	.options .ex:hover{ color: $red }
+
+	.content { padding: 0 20px 10px; }
+	.slot { min-height: 150px }
+
+	.heading { font-size: 12pt; margin: 15px 20px; font-weight: normal; color: $dgray; padding: 5px 10px; color: $dark; border-left: 3px solid $primary }
+	.btns { text-align: right; margin: 10px 0 0; padding: 10px; border-top: 1px solid $lgray; background: lighten($lgray, 5%); position: relative; border-radius: 0 0 5px 5px }
+
+	.actions-left { position: absolute; left: 20px }
+
+	.blackout { background: rgba(0,10,50,0.2); position: fixed; top: 0; right: 0; left: 0; bottom: 0; z-index: -1; display: none }
+}

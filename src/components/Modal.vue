@@ -60,7 +60,6 @@ export default {
 
 	mounted() {
 		let self = this;
-		// self.defaultLang = app._.extend(self.defaultLang, self.lang);
 
 		if(self.value) {
 			self.$emit('shown');
@@ -69,7 +68,7 @@ export default {
 		self.$nextTick(() => {
 			self.adjust();
 
-			self.escapeListener = $listeners.on(document.body, 'keyup', function(event) {
+			self.escapeListener = hx.listener.on(document.body, 'keyup', function(event) {
 				let skip = ['INPUT', 'TEXTAREA'];
 				if(event.keyCode === 27 && self.value && skip.indexOf(event.target.nodeName) === -1) {
 					if(self) {
@@ -83,7 +82,7 @@ export default {
 	methods: {
 		close() {
 			let self = this;
-			helper.timeout(5, () => {
+			hx.timeout(5, () => {
 				self.$emit('hidden', self);
 				self.adjust();
 			});
@@ -109,7 +108,7 @@ export default {
 		show() {
 			let self = this;
 			self.showing = true;
-			helper.timeout(5, () => {
+			hx.timeout(5, () => {
 				self.$emit('shown', self);
 			});
 		},
@@ -119,7 +118,7 @@ export default {
 		},
 
 		adjust: _.debounce(function() {
-			setTimeout(() => $event.fire('modal.change', self.value || self.toggle), 0);
+			setTimeout(() => hx.event.fire('modal.change', self.value || self.toggle), 0);
 
 			if(!this.toggle && !this.value) {
 				return false;
