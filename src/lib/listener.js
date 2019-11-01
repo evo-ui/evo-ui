@@ -1,4 +1,4 @@
-let listeners = (function() {
+let $listeners = (function() {
     let i = 1;
     let listeners = {};
 
@@ -20,15 +20,15 @@ let listeners = (function() {
         },
 
         off(id) {
-            if(id in listeners) {
+            if(typeof listeners[id] !== 'undefined') {
                 let listener = listeners[id];
                 listener.element.removeEventListener(listener.event, listener.handler, listener.capture);
                 delete listeners[id];
             } else {
-                console.warn('app.$listener ID not found', {id});
+                console.warn('Listener ID not found', {id});
             }
         }
     }
 })();
 
-export default listeners;
+export default $listeners;
