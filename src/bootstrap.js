@@ -69,8 +69,8 @@ let Bootstrap = {};
  */
 Bootstrap.make = function({routes, components, states, scrollBehavior, actions, mode}) {
     let router = null;
-    if (routes && typeof VueRouter !== 'undefined') {
-        let router = new VueRouter({
+    if (routes) {
+        router = new VueRouter({
             mode: mode || 'history',
             routes,
             scrollBehavior
@@ -78,7 +78,7 @@ Bootstrap.make = function({routes, components, states, scrollBehavior, actions, 
     }
 
     let store = null;
-    if (typeof Store !== 'undefined' && (states || actions)) {
+    if (states || actions) {
         store = states ? Store.make(states, actions) : null;
     }
 
