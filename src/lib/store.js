@@ -6,13 +6,13 @@ import Vuex from 'vuex';
  *
  * @type {{}}
  */
-let actions = {};
+let actionsDefault = {};
 
 /**
  *
  * @param context
  */
-actions.stateStoreInStorage = function(context) {
+actionsDefault.stateStoreInStorage = function(context) {
     hx.storage('app', context.state);
 };
 
@@ -20,7 +20,7 @@ actions.stateStoreInStorage = function(context) {
  *
  * @param context
  */
-actions.stateLoadFromStorage = function(context) {
+actionsDefault.stateLoadFromStorage = function(context) {
     let store = hx.storage('app');
 
     if(store && typeof store === 'object') {
@@ -36,7 +36,14 @@ actions.stateLoadFromStorage = function(context) {
 
 let Store = {};
 
-Store.make = function(state) {
+Store.make = function(state, actions) {
+
+    if (actions) {
+        actions = Object.assign(actionsDefault, actions);
+    } else {
+        actions = actionsDefault;
+    }
+
     return new Vuex.Store({
         state,
         mutations: mapStateMutations(state),
