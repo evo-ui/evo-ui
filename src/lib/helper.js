@@ -5,12 +5,41 @@ import Event from './event';
 import Xhr from "./xhr";
 
 let helper = {};
+let config = {
+    api_endpoint: '/api/v1/',
+    api_token_key: 'api_token',
+    api_token: ''
+};
 
 helper.storage = Storage;
 helper.listener = Listener;
 helper.notify = Notify;
 helper.event = Event;
 helper.xhr = new Xhr();
+
+helper.config = function(key, value) {
+    if (!key) {
+        return config;
+    }
+
+    if (typeof key === 'string') {
+        if (typeof config[key] !== 'undefined') {
+            return config[key];
+        }
+
+        return null;
+    }
+
+    if (typeof key === 'object') {
+        for(let i in key) {
+            if (!key.hasOwnProperty(i)) {
+                continue;
+            }
+
+            config[i] = key[i];
+        }
+    }
+};
 
 /**
  * Trigger a notification message at the top right corner
@@ -75,15 +104,12 @@ helper.notify = function(title, message, type, timer) {
  * @returns {string}
  */
 helper.api = function(endpoint, params) {
-    let url = app.api_endpoint + endpoint;
-
-    // if(params) {
-    //     url += '?'+ this.query(params);
-    // }
+    let url = helper.config('api_endpoint') + endpoint;
 
     let parts = '';
-    if (typeof app === 'object' && app.api_token) {
-        parts = '?api_token=' + app.api_token;
+    let apiToken = helper.config('api_token');
+    if (apiToken) {
+        parts = '?'+helper.config('api_token_key')+'=' + apiToken;
     }
 
     if( params ) {
@@ -306,6 +332,7 @@ helper.timeout = function(func, time, global) {
     }
 
     let timer = setTimeout(func, time);
+    if (typeof app === 'undefined') { app = {}; }
     if( typeof app.timers === 'undefined' || !app.timers ) { app.timers = {}; }
 
     let type = global ? 'global' : 'page';
