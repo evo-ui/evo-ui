@@ -16,7 +16,7 @@ let methods = {};
  * @returns {*}
  */
 methods.ago = function(value) {
-    return dayjs(value).fromNow();
+    return dayJs(value).fromNow();
 };
 
 /**
@@ -25,7 +25,7 @@ methods.ago = function(value) {
  * @returns {*}
  */
 methods.datetime = function(value) {
-    return dayjs(value).format('YYYY-MM-DD HH:mm');
+    return dayJs(value).format('YYYY-MM-DD HH:mm');
 };
 
 /**
