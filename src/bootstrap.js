@@ -67,12 +67,13 @@ let Bootstrap = {};
  * @param states
  * @returns {Vue | CombinedVueInstance<Vue, object, object, object, Record<never, any>>}
  */
-Bootstrap.make = function({routes, components, states, scrollBehavior, actions, mode}) {
+Bootstrap.make = function({routes, components, states, scrollBehavior, actions, mode, base}) {
     let router = null;
     if (routes) {
         router = new VueRouter({
             mode: mode || 'history',
             routes,
+            base,
             scrollBehavior
         });
     }
