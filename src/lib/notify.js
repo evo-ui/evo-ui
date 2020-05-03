@@ -4,8 +4,14 @@ let notify = (function() {
         notify
     };
 
-    let list = document.createElement("UL");
-    list.id = "notifications";
+    let list = document.getElementById('notifications');
+    let created = false;
+    if (!list) {
+        list = document.createElement("UL");
+        list.id = "notifications";
+        created = true;
+    }
+
 
     /**
      * Append to body when it exists.
@@ -20,7 +26,9 @@ let notify = (function() {
     }
 
     ready(function() {
-        document.body.appendChild(list);
+        if (created) {
+            document.body.appendChild(list);
+        }
 
         if(messages && messages.length) {
             for(let i in messages) {

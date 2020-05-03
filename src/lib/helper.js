@@ -314,7 +314,7 @@ helper.copyToClipboard = function(str) {
         document.getSelection().addRange(selected);   // Restore the original selection
     }
 
-    helper.notify(true, `"${str.substr(0, 30)}" copied to clipboard`);
+    // helper.notify(true, `"${str.substr(0, 30)}" copied to clipboard`);
 };
 
 helper.timeout = function(func, time, global) {
